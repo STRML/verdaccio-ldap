@@ -1,6 +1,6 @@
 {
   "name": "verdaccio-ldap-group-fix",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "LDAP auth plugin for verdaccio with fix for groups",
   "author": "Alexandre L.",
   "repository": {
