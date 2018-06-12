@@ -51,30 +51,19 @@ Auth.prototype.authenticate = function (user, password, callback) {
 
     return false; // indicates failure
   })
-  .finally(() => {
-    return LdapClient.closeAsync()
-    .catch((err) => {
-      // 'No such user' is reported via error
-      this._logger.warn({
-        user: user,
-        err: err,
-      }, `LDAP error ${err}`);
-
-      return false; // indicates failure
-    })
-    .finally((ldapUser) => {
-      /*
-       * LdapClient.closeAsync doesn't work with node 10.x
-       *
-       * return LdapClient.closeAsync()
-       *    .catch((err) => {
-       *      this._logger.warn({
-       *        err: err
-       *      }, 'LDAP error on close @{err}');
-       *  });
-       */
-      LdapClient.close();
-      return ldapUser;
-    })
-    .asCallback(callback);
+  .finally((ldapUser) => {
+    /*
+     * LdapClient.closeAsync doesn't work with node 10.x
+     *
+     * return LdapClient.closeAsync()
+     *    .catch((err) => {
+     *      this._logger.warn({
+     *        err: err
+     *      }, 'LDAP error on close @{err}');
+     *  });
+     */
+    LdapClient.close();
+    return ldapUser;
+  })
+  .asCallback(callback);
 };
